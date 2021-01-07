@@ -1,43 +1,58 @@
-import React from "react";
+import React, {useState} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import FilterItem from "./FilterItem";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
-        borderRadius: 16,
-        maxWidth: 350,
-        '& .MuiCardContent-root': {
-            padding: 0
-        }
-    },
-    title: {
-        background: '#64b5f6',
-        color: 'black',
-        padding: 16,
-        fontSize: 14,
-        textAlign: 'left',
-    },
-    filterContent: {
-        borderTop: '1px solid #ccc',
-        color: 'black',
-        padding: 16,
-        fontSize: 12,
-        textAlign: 'left',
-    },
+        display: 'flex',
+        flexDirection: 'column'
+    }
 }));
 
+const filtersState = {
+    departureAirport: {},
+    arriveAirport: {},
+    airline: {}
+}
+
 function Filter() {
-    const content = ['Param#1', 'Param2','Param#3', 'Param#4']
+    const classes = useStyles();
+    const content = {
+        departureAirports: [
+            {id: 1, name: "Symphony of the seas"},
+            {id: 2, name: "Symphony of the oasis"},
+            {id: 3, name: "Symphony of the oceans"}
+        ],
+        arriveAirports: [
+            {id: 1, name: "Arrive of the seas"},
+            {id: 2, name: "Arrive of the oasis"},
+            {id: 3, name: "Arrive of the oceans"}
+        ],
+    }
+    const filter = useState(filtersState)
+
+    const onFilterSet = (updatable, value) => {
+        filtersState[updatable] = value
+        console.log(filtersState)
+    }
+
     return (
-        <>
-            <FilterItem title={"Hello airport"} content={content}/>
-            <FilterItem title={"Hello airport"} content={content}/>
-            <FilterItem title={"Hello airport"} content={content}/>
-            <FilterItem title={"Hello airport"} content={content}/>
-        </>
+        <div className={classes.root}>
+            <FilterItem title={"Departure airport"}
+                        subtitle={'Київ — Лондон 13 січня'}
+                        content={content.departureAirports} onFilterSet={onFilterSet}
+                        updatable={'departureAirport'}/>
+            <FilterItem title={"Arrive airport"}
+                        subtitle={'Київ — Лондон 13 січня'}
+                        content={content.arriveAirports}
+                        onFilterSet={onFilterSet}
+                        updatable={'arriveAirport'}/>
+            <FilterItem title={"Arrive airport"}
+                        subtitle={'Київ — Лондон 13 січня'}
+                        content={content.arriveAirports}
+                        onFilterSet={onFilterSet}
+                        updatable={'arriveAirport'}/>
+        </div>
     )
 }
 

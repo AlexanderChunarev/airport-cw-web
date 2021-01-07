@@ -1,12 +1,15 @@
 import React from 'react'
 import Filter from "./components/Filter";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import ResultsBoard from "./components/resultsBoard/ResultsBoard";
 
 const useStyles = makeStyles(() => ({
     root: {
+        display: "flex",
         background: '#efefef',
-        padding: 32,
-
+        paddingTop: 32,
+        paddingLeft: 320,
+        paddingRight: 320
     }
 }));
 
@@ -16,6 +19,7 @@ function DetailsPage() {
     return (
         <section className={classes.root}>
             <Filter/>
+            <ResultsBoard/>
         </section>
     )
 }
