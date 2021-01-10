@@ -2,6 +2,7 @@ import React from 'react'
 import SearchForm from "./components/FlightSearchForm";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import './MainPage.css'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -12,10 +13,10 @@ const useStyles = makeStyles(() => ({
             color: '#eaeaea'
         }
     },
-    containerWrap: {
+    container: {
         marginTop: 32,
-        marginLeft: 256,
-        marginRight: 256
+        marginLeft: 400,
+        marginRight: 400
     }
 }));
 
@@ -24,10 +25,10 @@ function MainPage() {
 
     return (
         <div className={classes.root}>
-            <div className={classes.containerWrap}>
+            <div className={classes.container}>
                 <Typography variant="h3">Hello! Where do you want to fly?</Typography>
             </div>
-            <div className={classes.containerWrap}>
+            <div className={classes.container}>
                 <SearchForm/>
             </div>
         </div>

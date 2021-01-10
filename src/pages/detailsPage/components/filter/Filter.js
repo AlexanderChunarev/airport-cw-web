@@ -52,8 +52,12 @@ function Filter() {
                         content={content.arriveAirports}
                         onFilterSet={onFilterSet}
                         updatable={'arriveAirport'}/>
-            <FilterItem title={"Arrive airport"}
+            <FilterItem title={"Transfers"}
                         subtitle={'Київ — Лондон 13 січня'}
+                        content={content.arriveAirports}
+                        onFilterSet={onFilterSet}
+                        updatable={'arriveAirport'}/>
+            <FilterItem title={"Airline"}
                         content={content.arriveAirports}
                         onFilterSet={onFilterSet}
                         updatable={'arriveAirport'}/>

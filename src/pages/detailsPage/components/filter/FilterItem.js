@@ -44,6 +44,7 @@ const useStyles = makeStyles(() => ({
             margin: 0
         },
         '& .MuiListItem-root': {
+            cursor: 'pointer',
             padding: 12
         }
     },
