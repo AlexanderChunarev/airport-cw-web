@@ -5,7 +5,12 @@ import FilterItem from "./FilterItem";
 const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        '& .MuiTypography-root': {
+            fontSize: 12,
+            fontFamily: 'sans-serif',
+            color: '#3b3b3b'
+        }
     }
 }));
 

@@ -12,6 +12,10 @@ const useStyles = makeStyles(() => ({
         marginBottom: 32,
         display: 'flex',
         flexDirection: 'column',
+        '& .MuiPaper-root': {
+            marginTop: 16,
+            boxShadow: '0px 1px 5px 1px rgba(0,0,0,0.16)'
+        }
     }
 }));
 
@@ -29,7 +33,13 @@ function ResultsBoard() {
             <Card className={classes.root}>
                 <CardContent>
                     {
-                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index} />) : ''
+                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
+                    }
+                    {
+                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
+                    }
+                    {
+                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
                     }
                 </CardContent>
             </Card>

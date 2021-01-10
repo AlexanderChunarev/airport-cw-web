@@ -13,13 +13,10 @@ const useStyles = makeStyles(() => ({
         width: 256,
         '& .MuiCard-root': {
             marginBottom: 24,
-            borderRadius: 12,
-            '& .MuiTypography-root': {
-                fontSize: 12,
-                fontFamily: 'sans-serif'
-            }
+            borderRadius: 12
         },
         '& .MuiTypography-h6': {
+            color: '#8d8c8c',
             textAlign: 'left',
             fontSize: 12
         },
@@ -31,8 +28,14 @@ const useStyles = makeStyles(() => ({
             padding: 0
         },
         '& .MuiListItem-root.Mui-selected': {
-            color: 'white',
-            backgroundColor: '#057ecf',
+            backgroundColor: '#026db3',
+            '& .MuiTypography-root': {
+                color: 'white'
+            },
+            '&:hover': {
+                backgroundColor: "#00B3C3",
+                transition: '0.3s'
+            }
         },
         '& .MuiList-root': {
             padding: 0

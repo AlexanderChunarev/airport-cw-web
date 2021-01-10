@@ -1,19 +1,19 @@
 import React from 'react'
-import Filter from "./components/Filter";
+import Filter from "../filter/Filter";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import ResultsBoard from "./components/resultsBoard/ResultsBoard";
+import ResultsBoard from "./ResultsBoard";
 
 const useStyles = makeStyles(() => ({
     root: {
         display: "flex",
         background: '#efefef',
         paddingTop: 32,
-        paddingLeft: 320,
-        paddingRight: 320
+        paddingLeft: 128,
+        paddingRight: 128
     }
 }));
 
-function DetailsPage() {
+function ResultsPage() {
     const classes = useStyles()
 
     return (
@@ -24,4 +24,4 @@ function DetailsPage() {
     )
 }
 
-export default DetailsPage
+export default ResultsPage
