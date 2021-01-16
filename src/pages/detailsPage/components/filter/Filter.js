@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import FilterItem from "./FilterItem";
+import {selectDistinct} from "../../../../utils/ArrayUtils";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -14,53 +15,65 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const filtersState = {
-    departureAirport: {},
-    arriveAirport: {},
-    airline: {}
-}
-
-function Filter() {
+function Filter(props) {
+    const {data, trips, onApplyFilter} = props;
     const classes = useStyles();
-    const content = {
-        departureAirports: [
-            {id: 1, name: "Symphony of the seas"},
-            {id: 2, name: "Symphony of the oasis"},
-            {id: 3, name: "Symphony of the oceans"}
-        ],
-        arriveAirports: [
-            {id: 1, name: "Arrive of the seas"},
-            {id: 2, name: "Arrive of the oasis"},
-            {id: 3, name: "Arrive of the oceans"}
-        ],
-    }
-    const filter = useState(filtersState)
 
-    const onFilterSet = (updatable, value) => {
-        filtersState[updatable] = value
-        console.log(filtersState)
+    const onFilterSelect = (value) => {
+        onApplyFilter(value)
+    }
+
+    function mapToObject(title, subtitle, content, onFilterSelect, objKey, selectableProp) {
+        return {
+            title,
+            subtitle,
+            content,
+            onFilterSelect,
+            objKey,
+            selectableProp
+        }
+    }
+
+    function buildFilterParams() {
+        const {departureLocation, arriveLocation} = data
+        const content = []
+
+        if (departureLocation.category === 'countries') {
+            content.push(mapToObject(
+                "Departure airport",
+                `${departureLocation.country} — ${arriveLocation.country}`,
+                selectDistinct(trips.map(t => t.departureAirport), 'name'),
+                onFilterSelect,
+                'departureAirportId',
+                'name'
+            ));
+        }
+        if (arriveLocation.category === 'countries') {
+            content.push(mapToObject(
+                "Arrive airport",
+                `${departureLocation.country} — ${arriveLocation.country}`,
+                selectDistinct(trips.map(t => t.arriveAirport), 'name'),
+                onFilterSelect,
+                'arriveAirportId',
+                'name'
+            ));
+        }
+
+        return content
     }
 
     return (
         <div className={classes.root}>
-            <FilterItem title={"Departure airport"}
-                        subtitle={'Київ — Лондон 13 січня'}
-                        content={content.departureAirports} onFilterSet={onFilterSet}
-                        updatable={'departureAirport'}/>
-            <FilterItem title={"Arrive airport"}
-                        subtitle={'Київ — Лондон 13 січня'}
-                        content={content.arriveAirports}
-                        onFilterSet={onFilterSet}
-                        updatable={'arriveAirport'}/>
+            {buildFilterParams().map((params, index) => <FilterItem key={index} {...params}/>)}
             <FilterItem title={"Transfers"}
-                        subtitle={'Київ — Лондон 13 січня'}
-                        content={content.arriveAirports}
-                        onFilterSet={onFilterSet}
-                        updatable={'arriveAirport'}/>
+                        content={trips.map(t => t.transfers)}
+                        onFilterSelect={onFilterSelect}
+                        objKey={'transfers'}/>
             <FilterItem title={"Airline"}
-                        content={content.arriveAirports}
-                        onFilterSet={onFilterSet}
-                        updatable={'arriveAirport'}/>
+                        content={trips.map(t => t.airline)}
+                        onFilterSelect={onFilterSelect}
+                        objKey={'airlineId'}
+                        selectableProp={'name'}/>
         </div>
     )
 }

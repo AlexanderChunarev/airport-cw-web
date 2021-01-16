@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ResultItem from "./ResultItem";
 import axios from "axios";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -19,25 +20,14 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function ResultsBoard() {
+function ResultsBoard(props) {
     const classes = useStyles()
-    const [trips, setTrips] = useState([])
-
-    useEffect(async () => {
-        const result = await axios.get('/api/trips?departureId=4&arriveId=8')
-        setTrips(result.data)
-    }, [])
+    const trips = props.trips
 
     return (
         <>
             <Card className={classes.root}>
                 <CardContent>
-                    {
-                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
-                    }
-                    {
-                        trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
-                    }
                     {
                         trips.length > 0 ? trips.map((trip, index) => <ResultItem trip={trip} key={index}/>) : ''
                     }

@@ -1,7 +1,7 @@
 import {Route, Switch} from 'react-router-dom';
 import React from 'react';
 import MainPage from "../pages/mainPage/MainPage";
-import ResultsPage from "../pages/detailsPage/components/resultsBoard/ResultsPage";
+import ResultsPage from "../pages/detailsPage/ResultsPage";
 
 export function AppRouter() {
 

@@ -1,5 +1,6 @@
 import actions from '../actions-types';
 import axios from "axios";
+import {buildQueryString} from "../../../utils/QueryUtils";
 
 export const fetchFlightsAction = (data) => {
     return {
@@ -9,11 +10,10 @@ export const fetchFlightsAction = (data) => {
 }
 
 export const fetchFlights = (params) => {
-    let queryString = `?departureId=${params.departureId}&arriveId=${params.arriveId}`
-    queryString = "?departureId=4&arriveId=8"
+    let queryString = buildQueryString(params);
 
     return async (dispatch) => {
-        const result = await axios.get(`api/trips${queryString}`)
-        dispatch(fetchFlightsAction(result.data))
+        const result = await axios.get(`api/trips/query?${queryString}`);
+        dispatch(fetchFlightsAction(result.data));
     }
 }

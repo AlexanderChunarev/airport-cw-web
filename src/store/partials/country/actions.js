@@ -17,8 +17,8 @@ export const fetchAirportsAction = (data) => {
 
 export const fetchCountries = (pattern) => {
     return async (dispatch) => {
-        const countries = await axios.get(`api/countries?pattern=${pattern}`)
-        const airports = await axios.get(`api/airports?pattern=${pattern}`)
+        const countries = await axios.get(`api/countries/query?pattern=${pattern}`)
+        const airports = await axios.get(`api/airports/query?pattern=${pattern}`)
         dispatch(fetchCountriesAction(countries.data))
         dispatch(fetchAirportsAction(airports.data))
     }

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Button from "@material-ui/core/Button";
@@ -8,7 +8,6 @@ import {DatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {useAutoCompleteField, useDateField} from "../../../hooks/hooks";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCountries} from "../../../store/partials/country/actions";
-import {fetchFlights} from "../../../store/partials/flight/actions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,30 +30,58 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function FlightSearchForm() {
+function FlightSearchForm(props) {
     const classes = useStyles();
-    const departureDate = useDateField(new Date(), 'departureDate')
     const dispatch = useDispatch();
-    const autocompleteData = useSelector(state => state.countries)
-    const departureLocation = useAutoCompleteField({})
-    const arriveLocation = useAutoCompleteField({})
-    const options = buildOptions(autocompleteData)
-
-    console.log(departureLocation.value)
-    console.log(arriveLocation.value)
+    const departureDate = useDateField(new Date(), 'departureDate');
+    const departureLocation = useAutoCompleteField({});
+    const arriveLocation = useAutoCompleteField({});
+    const autocompleteData = useSelector(state => state.countries);
+    const options = buildOptions(autocompleteData);
 
     const onInputChange = (event, value) => {
         dispatch(fetchCountries(value))
+    };
+
+    const buildQueryParams = () => {
+        let params = {
+            departureCountryId: 0,
+            arriveCountryId: 0,
+            departureAirportId: 0,
+            arriveAirportId: 0,
+            depatrureDate: new Date()
+        }
+        if (departureLocation.value.category === 'countries') {
+            params.departureCountryId = departureLocation.value.id;
+        }
+        if (departureLocation.value.category === 'airports') {
+            params.departureAirportId = departureLocation.value.id;
+        }
+        if (arriveLocation.value.category === 'countries') {
+            params.arriveCountryId = arriveLocation.value.id;
+        }
+        if (arriveLocation.value.category === 'airports') {
+            params.arriveAirportId = arriveLocation.value.id;
+        }
+        params.depatrureDate = departureDate.value.getTime() / 1000
+        console.log(params)
+        return params;
     }
 
     const onSubmitHandler = (event) => {
-        event.preventDefault()
-        const params = {departureId: departureLocation.value.id, arriveId: arriveLocation.value.id}
-        dispatch(fetchFlights(params))
-    }
+        event.preventDefault();
+        const data = {
+            params: buildQueryParams(),
+            filters: {
+                departureLocation: departureLocation.value,
+                arriveLocation: arriveLocation.value,
+            }
+        };
+        props.onRedirectHandler('/results', data);
+    };
 
     function buildOptions(data) {
-        let options = []
+        let options = [];
         Object.keys(data).forEach(key => {
             data[key].forEach(o => {
                 options.push({
@@ -63,7 +90,7 @@ function FlightSearchForm() {
                 })
             })
         })
-        return options
+        return options;
     }
 
     return (
@@ -88,6 +115,7 @@ function FlightSearchForm() {
                     />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
+                            minDate = {new Date()}
                             disableToolbar
                             variant="inline"
                             format="dd/MM/yyyy"

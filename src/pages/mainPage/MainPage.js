@@ -3,12 +3,16 @@ import SearchForm from "./components/FlightSearchForm";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import './MainPage.css'
+import {useHistory} from "react-router-dom";
+import png from './KUd2PIg.jpg';
 
 const useStyles = makeStyles(() => ({
     root: {
-        paddingTop: 128,
-        paddingBottom: 128,
-        backgroundImage: `url("https://kiyavia.com/files/cities/Winter_1920_13_min.jpg")`,
+        width: '100%',
+        paddingTop: 228,
+        paddingBottom: 256,
+        background: `url("${png}") no-repeat bottom`,
+        backgroundSize: "cover",
         '& .MuiTypography-h3': {
             color: '#eaeaea'
         }
@@ -21,7 +25,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 function MainPage() {
+    const history = useHistory()
     const classes = useStyles()
+
+    const onRedirectHandler = (path, data = {}) => {
+        history.push({
+            pathname: path,
+            state: data
+        });
+    }
 
     return (
         <div className={classes.root}>
@@ -29,7 +41,7 @@ function MainPage() {
                 <Typography variant="h3">Hello! Where do you want to fly?</Typography>
             </div>
             <div className={classes.container}>
-                <SearchForm/>
+                <SearchForm onRedirectHandler={onRedirectHandler}/>
             </div>
         </div>
     )

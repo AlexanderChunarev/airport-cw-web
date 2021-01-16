@@ -74,12 +74,14 @@ const theme = createMuiTheme({
 
 function FilterItem(props) {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
-    const {title, subtitle, content, updatable, onFilterSet} = props
+    const {title, subtitle, content, objKey, onFilterSelect, selectableProp} = props
     const classes = useStyles()
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index.index);
-        onFilterSet(updatable, index.item)
+    const handleListItemClick = (event, item) => {
+        setSelectedIndex(item.index);
+        const objValue = typeof item.item === 'object' ? item.item.id : item.item
+        const obj = {[objKey]: objValue ? objValue : 0}
+        onFilterSelect(obj)
     };
 
     return (
@@ -106,7 +108,8 @@ function FilterItem(props) {
                                             className={classes.filterItem}
                                             selected={selectedIndex === index}
                                             onClick={(event) => handleListItemClick(event, {item, index})}>
-                                            <ListItemText primary={item.name}/>
+                                            <ListItemText
+                                                primary={selectableProp ? item[selectableProp] : item}/>
                                         </ListItem>
                                     )
                                 })
