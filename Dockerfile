@@ -8,7 +8,5 @@ RUN npm install
 RUN npm i @date-io/date-fns@1.3 date-fns
 
 COPY . .
-
-EXPOSE $PORT
  
 CMD [ "npm", "start" ]
