@@ -64,16 +64,16 @@ function Filter(props) {
 
     return (
         <div className={classes.root}>
-            {buildFilterParams().map((params, index) => <FilterItem key={index} {...params}/>)}
+            {buildFilterParams().map((params, index) => <FilterItem key={index} {...params} />)}
             <FilterItem title={"Transfers"}
-                        content={trips.map(t => t.transfers)}
-                        onFilterSelect={onFilterSelect}
-                        objKey={'transfers'}/>
+                content={selectDistinct(trips.map(t => t.transfers))}
+                onFilterSelect={onFilterSelect}
+                objKey={'transfers'} />
             <FilterItem title={"Airline"}
-                        content={trips.map(t => t.airline)}
-                        onFilterSelect={onFilterSelect}
-                        objKey={'airlineId'}
-                        selectableProp={'name'}/>
+                content={selectDistinct(trips.map(t => t.airline))}
+                onFilterSelect={onFilterSelect}
+                objKey={'airlineId'}
+                selectableProp={'name'} />
         </div>
     )
 }
